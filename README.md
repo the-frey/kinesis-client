@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/the-frey/kinesis-client.svg?branch=master)](https://travis-ci.org/the-frey/kinesis-client)
+
 ## Kinesis Client
 
 A very minimal functional wrapper around the AWS SDK to provide a Kinesis Client. I'll extend as necessary.
