@@ -1,0 +1,19 @@
+{
+  "name": "kinesis-client",
+  "version": "0.0.1",
+  "description": "A tiny Kinesis client library",
+  "main": "core.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/the-frey/kinesis-client.git"
+  },
+  "author": "Alex Lynham",
+  "bugs": {
+    "url": "https://github.com/the-frey/kinesis-client/issues"
+  },
+  "homepage": "https://github.com/the-frey/kinesis-client#readme",
+  "dependencies": {
+    "aws-sdk": "^2.244.1",
+  },
+  "readme": "README.md"
+}
