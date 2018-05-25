@@ -1,3 +1,5 @@
+'use strict';
+
 const AWS = require('aws-sdk');
 
 module.exports.defaultOpts = () => {
@@ -11,11 +13,11 @@ module.exports.defaultOpts = () => {
 
 module.exports.createClient = (opts) => {
   if (opts !== null && opts !== undefined) {
-    new AWS.Kinesis(opts);
+    return new AWS.Kinesis(opts);
   } else {
     console.log('Kinesis: no config {} found, reverting to default...')
     // maybe force connectors to do this themselves?
-    new AWS.Kinesis(module.exports.defaultOpts);
+    return new AWS.Kinesis(module.exports.defaultOpts);
   }
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "kinesis-client",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A tiny Kinesis client library",
   "main": "core.js",
   "repository": {
@@ -11,9 +11,17 @@
   "bugs": {
     "url": "https://github.com/the-frey/kinesis-client/issues"
   },
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
   "homepage": "https://github.com/the-frey/kinesis-client#readme",
   "dependencies": {
-    "aws-sdk": "^2.244.1"
+    "aws-sdk": "^2.244.1",
+    "chai": "*",
+    "mocha": "*"
   },
   "readme": "README.md",
   "license": "MIT"
