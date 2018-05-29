@@ -23,21 +23,22 @@ module.exports.createClient = (opts) => {
 
 module.exports.createStream = (kinesisClient, opts) => {
   var req = kinesisClient.createStream(opts);
-  req.send(function (err, data) { 
-    if (err) {
-      if (err.code === 'ResourceInUseException') {
-        console.log(`Kinesis: Success, stream '${streamName}' exists`);
+  req.send(
+    (err, data) => { 
+      if (err) {
+        if (err.code === 'ResourceInUseException') {
+          console.log(`Kinesis: Success, stream '${streamName}' exists`);
+          process.exit(0);
+        }
+        else {
+          console.log(`Kinesis: Failed, create '${streamName}' failed with error ${err.stack}`);
+          process.exit(1);
+        }
+      }
+      else { 
+        console.log(`Kinesis: Success, stream '${streamName}' created`);
         process.exit(0);
       }
-      else {
-        console.log(`Kinesis: Failed, create '${streamName}' failed with error ${err.stack}`);
-        process.exit(1);
-      }
-    }
-    else { 
-      console.log(`Kinesis: Success, stream '${streamName}' created`);
-      process.exit(0);
-    }
   });
 };
 
