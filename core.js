@@ -17,32 +17,67 @@ module.exports.createClient = (opts) => {
   } else {
     console.log('Kinesis: no config {} found, reverting to default...')
     // maybe force connectors to do this themselves?
-    return new AWS.Kinesis(module.exports.defaultOpts);
+    return new AWS.Kinesis(module.exports.defaultOpts());
   }
 };
 
 module.exports.createStream = (kinesisClient, opts) => {
+  console.log(`Kinesis: creating stream with '${JSON.stringify(opts)}'`);
+
   var req = kinesisClient.createStream(opts);
+
   req.send(
     (err, data) => { 
       if (err) {
         if (err.code === 'ResourceInUseException') {
-          console.log(`Kinesis: Success, stream '${streamName}' exists`);
-          process.exit(0);
+          console.log(`Kinesis: Success, stream '${opts.StreamName}' exists`);
+        } else {
+          console.log(`Kinesis: Failed, create '${opts.StreamName}' failed with error ${err.stack}`);
         }
-        else {
-          console.log(`Kinesis: Failed, create '${streamName}' failed with error ${err.stack}`);
-          process.exit(1);
-        }
-      }
-      else { 
-        console.log(`Kinesis: Success, stream '${streamName}' created`);
-        process.exit(0);
+      } else { 
+        console.log(`Kinesis: Success, stream '${opts.StreamName}' created`);
+        data.code = 0;
       }
   });
+
+  return req;
 };
 
-module.exports.putRecord = (kinesisClient, data, callbackFn) => {
-  kinesisClient.putRecord(data,
-                          callbackFn);
+module.exports.deleteStream = (kinesisClient, opts) => {
+  console.log(`Kinesis: deleting stream with '${JSON.stringify(opts)}'`);
+
+  var req = kinesisClient.deleteStream(opts);
+
+  req.send(
+    (err, data) => {
+      if (err) {
+        if (err.code === 'ResourceNotFoundException') {
+          console.log(`Kinesis: delete failed, '${opts.StreamName}' does not exist.`)
+        } else {
+          console.log(err, err.stack);
+        }
+      } else {
+        console.log(`Kinesis: delete successful, '${data}'`);
+      }
+    });
+
+  return req;
+};
+
+module.exports.putRecord = (kinesisClient, data) => {
+  console.log(`Kinesis: putting record on stream with '${JSON.stringify(data)}'`);
+
+  var req = kinesisClient.putRecord(data);
+
+  req.send(
+    (err, data) => { 
+      if (err) {
+        //callback(err, {statusCode: 500, body: "Error writing to stream"});
+      }
+      else { 
+        //callback(null, {statusCode: 202, body: "ok" });
+      }
+    });
+
+  return req;
 };
