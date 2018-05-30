@@ -1,6 +1,6 @@
 {
   "name": "kinesis-client",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A tiny Kinesis client library",
   "main": "core.js",
   "repository": {

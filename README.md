@@ -6,6 +6,8 @@ A very minimal functional wrapper around the AWS SDK to provide a Kinesis Client
 
 The idea here is that the `kinesis` require functions more like a namespace containing functions than as an object.
 
+NOT PRODUCTION READY
+
 ## Usage
 
 To use in a lambda, do something like the below:
@@ -51,7 +53,7 @@ module.exports.source = (event, context, callback) => {
 
 ## TODO
 
-Add tests!
+Add more tests!
 
 ## Licence
 
