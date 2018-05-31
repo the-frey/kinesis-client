@@ -50,9 +50,8 @@ describe('createStream()', function () {
 
     core.createStream(kinesisClient, streamOpts).on('complete', (response) => {
 
-      var code = response.data.code;
-      expect(code).to.be.equal(0);
-      console.log(`KinesisTest: response code '${code}' receieved`);
+      expect(response.data.code).to.be.equal(0);
+      console.log(`KinesisTest: response response.data.code '${response.data.code}' receieved`);
 
 
       describe('the stream already exists', function () {
@@ -92,8 +91,6 @@ describe('putRecord()', function () {
       });
     });
 
-    core.createStream(kinesisClient, streamOpts).on('complete', (response) => {
-    });
   })
 
   it('should put a record on the stream', function(){
