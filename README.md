@@ -15,27 +15,17 @@ To use in a lambda, do something like the below:
 ```
 const kinesis = require('kinesis-client');
 
-const defaultOpts = () => {
-  return defaultOpts = {
-    endpoint: 'localhost:4567',
-    region: 'us-east-1',
-    apiVersion: '2013-12-02',
-    sslEnabled: false
-  };
+var defaultOpts = {
+  endpoint: 'localhost:4567',
+  region: 'us-east-1',
+  apiVersion: '2013-12-02',
+  sslEnabled: false
 };
 
 module.exports.source = (event, context, callback) => {
   const kinesisClient = kinesis.createClient(defaultOpts);
   var streamName = 'events';
   var streamOpts = { ShardCount: 1, StreamName: streamName }
-  var callbackFn = function (err, data) { 
-    if (err) {
-      callback(err, {statusCode: 500, body: "Error writing to stream"});
-    }
-    else { 
-      callback(null, {statusCode: 202, body: "ok" });
-    }
-  }
 
   kinesis.createStream(kinesisClient, streamOpts);
 
@@ -46,8 +36,7 @@ module.exports.source = (event, context, callback) => {
                      Data: JSON.stringify(event.body),
                      PartitionKey: '0', // change this!
                      StreamName: streamName
-                    },
-                    callbackFn);
+                    });
 };
 ```
 

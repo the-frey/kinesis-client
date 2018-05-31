@@ -64,20 +64,16 @@ module.exports.deleteStream = (kinesisClient, opts) => {
   return req;
 };
 
-module.exports.putRecord = (kinesisClient, data) => {
+module.exports.putRecord = (kinesisClient, data, callback) => {
   console.log(`Kinesis: putting record on stream with '${JSON.stringify(data)}'`);
 
   var req = kinesisClient.putRecord(data);
 
   req.send(
-    (err, data) => { 
-      if (err) {
-        //callback(err, {statusCode: 500, body: "Error writing to stream"});
-      }
-      else { 
-        //callback(null, {statusCode: 202, body: "ok" });
-      }
-    });
+    (err, data) => {
+      callback(err, data);
+    }
+  );
 
   return req;
 };

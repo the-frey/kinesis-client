@@ -106,6 +106,14 @@ describe('putRecord()', function () {
       PartitionKey: '0',
       StreamName: streamName
     }
+    var callbackFn = (err, data) => { 
+      if (err) {
+        return err;
+      }
+      else { 
+        return data;
+      }
+    }
 
     core.putRecord(kinesisClient, data).on('complete', (putResponse) => {
 
