@@ -23,10 +23,12 @@ describe('createClient()', function () {
     });
   })
 
-  it('should return a client object', function () {
+  it('should return a client object', function (done) {
     var kinesisClient = core.createClient(defaultOpts)
 
     expect(typeof kinesisClient).to.be.equal('object');
+
+    done();
 
   });
 });
@@ -46,7 +48,7 @@ describe('createStream()', function () {
   var streamOpts = { ShardCount: 1, StreamName: streamName };
   var kinesisClient = core.createClient(defaultOpts);
 
-  it('should create a stream and return 0', function () {
+  it('should create a stream and return 0', function (done) {
 
     core.createStream(kinesisClient, streamOpts).on('complete', (response) => {
 
@@ -62,10 +64,14 @@ describe('createStream()', function () {
             expect(response.error.code).to.be.equal('ResourceInUseException');
             expect(response.data).to.be.equal(null);
 
+            done();
+
           });
 
         });
       });
+
+      done();
 
     });
 
@@ -116,6 +122,8 @@ describe('putRecord()', function () {
 
       expect(putResponse.error).to.be.equal(null);
       expect(putResponse.httpResponse.statusCode).to.be.equal(200);
+
+      done();
 
     });
 
